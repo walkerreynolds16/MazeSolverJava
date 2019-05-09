@@ -1,9 +1,6 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
-
-import org.omg.CORBA.Current;
 
 public class Solver {
 	
@@ -15,7 +12,7 @@ public class Solver {
 
 	public static ArrayList<Point> createdPoints;
 	public static void main(String[] args) {
-		ProjectImageIO ing = new ProjectImageIO("./Mazes/10k.png");
+		ProjectImageIO ing = new ProjectImageIO("./Mazes/15k.png");
 		int[] pixels = ing.getImagePixelArray();
 		
 		if(pixels == null) {

@@ -1,11 +1,12 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.Arrays;
 import java.util.Queue;
 
 import javax.imageio.ImageIO;
+
+import com.objectplanet.image.PngEncoder;
 
 public class ProjectImageIO {
 	
@@ -77,6 +78,9 @@ public class ProjectImageIO {
         //set the pixel value 
         int pValue = (a<<24) | (r<<16) | (g<<8) | b; 
         
+        
+        long timeStart = System.nanoTime();
+        
         while(!path.isEmpty()) {
         	Point cur = path.remove();
         	Point next = path.peek();
@@ -116,14 +120,25 @@ public class ProjectImageIO {
         	} 
         }
         
+        double difference = (System.nanoTime() - timeStart) / 1000000000;
+		System.out.println("Set new pixel values: " + difference);
         
-        System.out.println("Saving image");
+        System.out.println("Saving image...");
+        
+        timeStart = System.nanoTime();
         try {
         	File file = new File("./Results/" + imageName + "_Result.png");
-			ImageIO.write(image, "png", file);
+        	FileOutputStream fout = new FileOutputStream(file);
+            
+        	PngEncoder encoder = new PngEncoder();
+        	
+        	encoder.encode(image, fout);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+        
+        difference = (System.nanoTime() - timeStart) / 1000000000;
+		System.out.println("Image Saved: " + difference);
         
 	}
 }
